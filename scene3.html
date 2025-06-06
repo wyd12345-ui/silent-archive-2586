@@ -316,8 +316,8 @@
 </head>
 <body>
     <div class="video-container">
-        <video id="bgVideo" class="video-bg" muted loop playsinline>
-            <source src="assets/scene3.mp4" type="video/mp4">
+        <video id="bgVideo" class="video-background" muted loop playsinline autoplay>
+            <source src="./assets/scene3.mp4" type="video/mp4">
             您的浏览器不支持视频播放。
         </video>
     </div>
@@ -379,38 +379,6 @@
                 </div>
             `;
             scene1Archive.innerHTML = scene1HTML;
-
-            // 显示场景二的选择
-            const scene2Choices = document.getElementById('scene2Choices');
-            if (scene2Choices) {
-                const letterArchived = localStorage.getItem('scene2_letter_archived') === 'true';
-                const photoArchived = localStorage.getItem('scene2_photo_archived') === 'true';
-                const newspaperArchived = localStorage.getItem('scene2_newspaper_archived') === 'true';
-                
-                let scene2Content = '<h3>场景二：档案室</h3>';
-                scene2Content += '<div class="choice-item">';
-                scene2Content += `<span class="item-name">信纸</span>`;
-                scene2Content += `<span class="archive-status ${letterArchived ? 'archived' : 'not-archived'}">`;
-                scene2Content += letterArchived ? '已存档' : '未存档';
-                scene2Content += '</span>';
-                scene2Content += '</div>';
-                
-                scene2Content += '<div class="choice-item">';
-                scene2Content += `<span class="item-name">照片</span>`;
-                scene2Content += `<span class="archive-status ${photoArchived ? 'archived' : 'not-archived'}">`;
-                scene2Content += photoArchived ? '已存档' : '未存档';
-                scene2Content += '</span>';
-                scene2Content += '</div>';
-                
-                scene2Content += '<div class="choice-item">';
-                scene2Content += `<span class="item-name">报纸</span>`;
-                scene2Content += `<span class="archive-status ${newspaperArchived ? 'archived' : 'not-archived'}">`;
-                scene2Content += newspaperArchived ? '已存档' : '未存档';
-                scene2Content += '</span>';
-                scene2Content += '</div>';
-                
-                scene2Choices.innerHTML = scene2Content;
-            }
 
             // 显示场景二的档案内容
             let scene2HTML = `
@@ -531,7 +499,7 @@
             });
 
             // 设置背景音乐
-            bgm.volume = 0.2; // 设置音量为20%
+            bgm.volume = 0.15; // 设置音量为15%
             bgm.play().catch(error => {
                 console.error('背景音乐播放失败:', error);
             });
