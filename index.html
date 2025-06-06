@@ -41,22 +41,35 @@
     const bgm = document.getElementById('bgm');
     bgm.volume = 0.2; // 设置音量为20%
 
-    // 当文字开始出现时播放背景音乐
+    // 创建观察器来监听文字出现
     const observer = new MutationObserver((mutations) => {
-        const missionText = document.querySelector('.mission-text');
-        if (missionText && missionText.textContent.includes('你是一名"历史考古者"')) {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                // 当文字出现时开始播放背景音乐
+                bgm.play().catch(error => {
+                    console.error('背景音乐播放失败:', error);
+                });
+                // 停止观察，因为我们只需要在第一次文字出现时播放
+                observer.disconnect();
+            }
+        });
+    });
+
+    // 开始观察文字容器
+    const textContainer = document.querySelector('.text-container');
+    if (textContainer) {
+        observer.observe(textContainer, { childList: true });
+    }
+
+    // 当页面隐藏时暂停背景音乐
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            bgm.pause();
+        } else {
             bgm.play().catch(error => {
                 console.error('背景音乐播放失败:', error);
             });
-            observer.disconnect(); // 停止观察
         }
-    });
-
-    // 开始观察文字变化
-    observer.observe(document.body, { 
-        childList: true, 
-        subtree: true,
-        characterData: true 
     });
 
     // 处理开始探索按钮点击
